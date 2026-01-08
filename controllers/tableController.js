@@ -1,7 +1,5 @@
-// controllers/tableController.js
 import { TableModel } from '../models/tableModel.js';
 
-// 🪑 Get all tables
 export const getAllTables = (req, res) => {
   const allTables = TableModel.getAllTables();
   res.json({
@@ -10,7 +8,6 @@ export const getAllTables = (req, res) => {
   });
 };
 
-// ✅ Get available tables
 export const getAvailableTables = (req, res) => {
   const availableTables = TableModel.getAvailableTables();
   res.json({
@@ -19,11 +16,9 @@ export const getAvailableTables = (req, res) => {
   });
 };
 
-// 📅 Create a new reservation
 export const createReservation = (req, res) => {
   const { name, tableId, time } = req.body;
 
-  // Validate input
   if (!name || !tableId || !time) {
     return res.status(400).json({ error: 'Please provide name, tableId, and time' });
   }
@@ -37,7 +32,6 @@ export const createReservation = (req, res) => {
   res.status(201).json(result);
 };
 
-// ❌ Cancel a reservation
 export const cancelReservation = (req, res) => {
   const { id } = req.params;
   const result = TableModel.cancelReservation(Number(id));
@@ -49,7 +43,6 @@ export const cancelReservation = (req, res) => {
   res.json(result);
 };
 
-// 🔍 Get all reservations
 export const getAllReservations = (req, res) => {
   const allReservations = TableModel.getAllReservations();
   res.json({

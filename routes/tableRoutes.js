@@ -9,14 +9,14 @@ import {
 
 const router = express.Router();
 
-router.get('/tables', getAllTables);
+router.get('/', getAllTables);
 
-router.get('/tables/available', getAvailableTables);
+router.get('/available', getAvailableTables);
 
-router.get('/tables/reservations', getAllReservations);
+router.get('/reservations', getAllReservations);
 
-router.post('/tables/reserve', createReservation);
+router.post('reserve', createReservation);
 
-router.delete('/tables/reservations/:id', cancelReservation);
+router.delete('/reservations/:id', cancelReservation);
 
 export default router;

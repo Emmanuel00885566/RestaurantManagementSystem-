@@ -6,7 +6,6 @@ export const TableModel = {
     return tables;
   },
 
-
   getAvailableTables() {
     return tables.filter(table => table.status === 'available');
   },

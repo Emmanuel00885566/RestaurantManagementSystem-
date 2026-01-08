@@ -1,5 +1,3 @@
-// data/inventoryData.js
-
 let inventory = [
   { id: 1, name: "Rice", quantity: 100, unit: "kg", lowStockThreshold: 20 },
   { id: 2, name: "Chicken", quantity: 50, unit: "pieces", lowStockThreshold: 10 },
