@@ -1,7 +1,5 @@
-// controllers/menuController.js
 import MenuItem from '../models/MenuItem.js';
 
-// GET /api/menu
 export const getAllMenuItems = async (req, res) => {
   try {
     const items = await MenuItem.find().sort({ createdAt: -1 });
@@ -11,7 +9,6 @@ export const getAllMenuItems = async (req, res) => {
   }
 };
 
-// GET /api/menu/:id
 export const getMenuItemById = async (req, res) => {
   try {
     const item = await MenuItem.findById(req.params.id);
@@ -22,7 +19,6 @@ export const getMenuItemById = async (req, res) => {
   }
 };
 
-// POST /api/menu
 export const addMenuItem = async (req, res) => {
   try {
     const { name, category, price, availability, description } = req.body;

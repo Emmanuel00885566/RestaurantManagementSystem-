@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import menuRoutes from './routes/menuRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-import tableRoutes from './routes/tableRoutes.js';
-import inventoryRoutes from './routes/inventoryRoutes.js';
+import connectDB from './src/config/db.js';
+import menuRoutes from './src/routes/menuRoutes.js';
+import orderRoutes from './src/routes/orderRoutes.js';
+import tableRoutes from './src/routes/tableRoutes.js';
+import inventoryRoutes from './src/routes/inventoryRoutes.js';
 
 dotenv.config();
 connectDB();
