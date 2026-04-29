@@ -1,62 +1,82 @@
-import { tables, reservations, generateReservationId } from '../data/tableData.js';
+import {
+  tables,
+  reservations,
+  generateReservationId,
+} from "../data/tableData.js";
 
 export const TableModel = {
- 
   getAllTables() {
     return tables;
   },
 
   getAvailableTables() {
-    return tables.filter(table => table.status === 'available');
+    return tables.filter(
+      (table) => table.status === "available"
+    );
   },
 
   reserveTable(name, tableId, time) {
-    const table = tables.find(t => t.id === tableId);
+    const parsedTableId = Number(tableId);
+
+    const table = tables.find(
+      (t) => t.id === parsedTableId
+    );
 
     if (!table) {
-      return { error: 'Table not found' };
+      return { error: "Table not found" };
     }
 
-    if (table.status !== 'available') {
-      return { error: 'Table is not available' };
+    if (table.status !== "available") {
+      return { error: "Table is not available" };
     }
 
     const newReservation = {
       id: generateReservationId(),
       name,
-      tableId,
+      tableId: parsedTableId,
       time,
-      status: 'confirmed'
+      status: "confirmed",
     };
 
     reservations.push(newReservation);
 
-   
-    table.status = 'occupied';
+    table.status = "occupied";
 
-    return { message: 'Reservation created successfully', reservation: newReservation };
+    return {
+      message: "Reservation created successfully",
+      reservation: newReservation,
+    };
   },
 
   cancelReservation(reservationId) {
-    const index = reservations.findIndex(r => r.id === reservationId);
+    const parsedId = Number(reservationId);
+
+    const index = reservations.findIndex(
+      (r) => r.id === parsedId
+    );
 
     if (index === -1) {
-      return { error: 'Reservation not found' };
+      return { error: "Reservation not found" };
     }
 
-    const canceledReservation = reservations.splice(index, 1)[0];
+    const canceledReservation =
+      reservations.splice(index, 1)[0];
 
-    
-    const table = tables.find(t => t.id === canceledReservation.tableId);
+    const table = tables.find(
+      (t) => t.id === canceledReservation.tableId
+    );
+
     if (table) {
-      table.status = 'available';
+      table.status = "available";
     }
 
-    return { message: 'Reservation canceled successfully', canceledReservation };
+    return {
+      message: "Reservation canceled successfully",
+      canceledReservation,
+    };
   },
 
- 
   getAllReservations() {
     return reservations;
-  }
+  },
 };

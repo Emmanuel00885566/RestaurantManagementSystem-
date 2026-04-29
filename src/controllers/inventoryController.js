@@ -20,39 +20,62 @@ export const getInventoryByIdController = (req, res) => {
 
 export const addInventoryItemController = (req, res) => {
   const { name, quantity, unit, lowStockThreshold } = req.body;
-  if (!name || !quantity || !unit) {
-    return res
-      .status(400)
-      .json({ message: "Name, quantity, and unit are required" });
+
+  if (!name || quantity == null || !unit) {
+    return res.status(400).json({
+      message: "Name, quantity, and unit are required",
+    });
   }
 
-  const newItem = addInventoryItem({ name, quantity, unit, lowStockThreshold });
-  res
-    .status(201)
-    .json({ message: "Item added successfully", item: newItem });
+  const newItem = addInventoryItem({
+    name,
+    quantity,
+    unit,
+    lowStockThreshold,
+  });
+
+  res.status(201).json({
+    message: "Item added successfully",
+    item: newItem,
+  });
 };
 
 export const updateInventoryItemController = (req, res) => {
   const updated = updateInventoryItem(req.params.id, req.body);
-  if (!updated) return res.status(404).json({ message: "Item not found" });
-  res.json({ message: "Item updated successfully", item: updated });
-};
 
+  if (!updated) {
+    return res.status(404).json({ message: "Item not found" });
+  }
+
+  res.json({
+    message: "Item updated successfully",
+    item: updated,
+  });
+};
 
 export const deleteInventoryItemController = (req, res) => {
   const deleted = deleteInventoryItem(req.params.id);
-  if (!deleted) return res.status(404).json({ message: "Item not found" });
-  res.json({ message: "Item deleted successfully" });
+
+  if (!deleted) {
+    return res.status(404).json({ message: "Item not found" });
+  }
+
+  res.json({
+    message: "Item deleted successfully",
+  });
 };
 
 export const updateStockLevelController = (req, res) => {
   const { quantityUsed } = req.body;
 
-  if (quantityUsed == null) {
-    return res.status(400).json({ message: "quantityUsed is required" });
+  if (quantityUsed === undefined || quantityUsed <= 0) {
+    return res.status(400).json({
+      message: "quantityUsed must be a positive number",
+    });
   }
 
   const item = getInventoryById(req.params.id);
+
   if (!item) {
     return res.status(404).json({ message: "Item not found" });
   }
@@ -64,6 +87,7 @@ export const updateStockLevelController = (req, res) => {
   }
 
   const updatedItem = updateStockLevel(req.params.id, quantityUsed);
+
   res.json({
     message: `Stock updated successfully. ${quantityUsed} ${item.unit} of ${item.name} used.`,
     item: updatedItem,
